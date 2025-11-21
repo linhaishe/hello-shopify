@@ -1,0 +1,15 @@
+<div class="header">
+  <div class="logo">
+    <a href="{{ shop.url }}">
+      <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}">
+    </a>
+  </div>
+  <nav class="navigation">
+    <ul>
+      <li><a href="{{ routes.home }}">Home</a></li>
+      <li><a href="{{ routes.collections }}">Collections</a></li>
+      <li><a href="{{ routes.products }}">Products</a></li>
+      <li><a href="{{ routes.cart }}">Cart</a></li>
+    </ul>
+  </nav>
+</div>

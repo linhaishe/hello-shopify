@@ -1,0 +1,56 @@
+{
+  "name": {
+    "message": "Name"
+  },
+  "description": {
+    "message": "Description"
+  },
+  "products": {
+    "message": "Products"
+  },
+  "collections": {
+    "message": "Collections"
+  },
+  "cart": {
+    "message": "Cart"
+  },
+  "checkout": {
+    "message": "Checkout"
+  },
+  "search": {
+    "message": "Search"
+  },
+  "account": {
+    "message": "Account"
+  },
+  "footer": {
+    "message": "Footer"
+  },
+  "header": {
+    "message": "Header"
+  },
+  "hero": {
+    "message": "Hero"
+  },
+  "add_to_cart": {
+    "message": "Add to Cart"
+  },
+  "view_cart": {
+    "message": "View Cart"
+  },
+  "checkout_now": {
+    "message": "Checkout Now"
+  },
+  "continue_shopping": {
+    "message": "Continue Shopping"
+  },
+  "no_products_found": {
+    "message": "No products found."
+  },
+  "loading": {
+    "message": "Loading..."
+  },
+  "error": {
+    "message": "An error occurred. Please try again."
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "hello-shopify",
+  "version": "1.0.0",
+  "description": "A Shopify theme project.",
+  "main": "theme/assets/theme.js",
+  "scripts": {
+    "build": "echo 'Building the theme...'",
+    "watch": "echo 'Watching for changes...'",
+    "deploy": "echo 'Deploying the theme...'"
+  },
+  "keywords": [
+    "shopify",
+    "theme",
+    "ecommerce"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "some-package": "^1.0.0"
+  },
+  "devDependencies": {
+    "some-dev-package": "^1.0.0"
+  }
+}

@@ -1,0 +1,10 @@
+name = "Hello Shopify"
+version = "1.0.0"
+vendor = "Your Name or Company"
+description = "A Shopify theme for showcasing products."
+license = "MIT"
+homepage = "https://yourwebsite.com"
+repository = "https://github.com/yourusername/hello-shopify"
+tags = ["shopify", "theme", "ecommerce"]
+preview = "theme/assets/preview.png"
+default_locale = "en"
