@@ -1,0 +1,384 @@
+{% comment %}
+Hero section: editable heading, subheading, image, badges, CTAs, colors, alignment and sizes.
+Place this file at: sections/hero.liquid
+{% endcomment %}
+
+<section id="hero-{{ section.id }}" class="hero-section hero--position-{{ section.settings.image_position }} hero--align-{{ section.settings.text_alignment }}">
+    <div class="hero__inner">
+        <div class="hero__media">
+            {% if section.settings.hero_image != blank %}
+                <img src="{{ section.settings.hero_image | img_url: '2048x' }}" alt="{{ section.settings.image_alt }}">
+            {% endif %}
+        </div>
+
+        <div class="hero__content">
+            {% if section.settings.badge_text != blank %}
+                <span class="hero__badge">{{ section.settings.badge_text }}</span>
+            {% endif %}
+
+            {% if section.settings.pre_heading != blank %}
+                <p class="hero__preheading">{{ section.settings.pre_heading }}</p>
+            {% endif %}
+
+            <h1 class="hero__title">{{ section.settings.heading }}</h1>
+
+            {% if section.settings.subheading != blank %}
+                <p class="hero__subtitle">{{ section.settings.subheading }}</p>
+            {% endif %}
+
+            <div class="hero__buttons">
+                {% if section.settings.cta_text != blank %}
+                    <a class="button button--primary" href="{{ section.settings.cta_link }}">{{ section.settings.cta_text }}</a>
+                {% endif %}
+                {% if section.settings.secondary_cta_text != blank %}
+                    <a class="button button--ghost" href="{{ section.settings.secondary_cta_link }}">{{ section.settings.secondary_cta_text }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Scoped to this section instance */
+        #hero-{{ section.id }} {
+            --hero-height: {{ section.settings.height }}px;
+            --overlay-color: {{ section.settings.overlay_color }};
+            --overlay-opacity: {{ section.settings.overlay_opacity }};
+            --content-max-width: 720px;
+            --title-color: {{ section.settings.title_color }};
+            --subtitle-color: {{ section.settings.subtitle_color }};
+            --badge-bg: {{ section.settings.badge_bg }};
+            --badge-color: {{ section.settings.badge_color }};
+            box-sizing: border-box;
+            padding: 0;
+            display: block;
+        }
+
+        #hero-{{ section.id }} .hero__inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px;
+            box-sizing: border-box;
+            min-height: var(--hero-height);
+        }
+
+        /* Column ordering for image left/right */
+        #hero-{{ section.id }}.hero--position-left .hero__media { order: 1; }
+        #hero-{{ section.id }}.hero--position-left .hero__content { order: 2; }
+        #hero-{{ section.id }}.hero--position-right .hero__media { order: 2; }
+        #hero-{{ section.id }}.hero--position-right .hero__content { order: 1; }
+
+        /* Media (image) */
+        #hero-{{ section.id }} .hero__media {
+            flex: 1 1 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 10px;
+            min-height: calc(var(--hero-height) - 80px);
+        }
+
+        #hero-{{ section.id }} .hero__media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transform-origin: center;
+            transition: transform .6s ease;
+        }
+
+        /* subtle zoom on hover on non-touch devices */
+        @media (hover: hover) and (pointer: fine) {
+            #hero-{{ section.id }} .hero__media:hover img {
+                transform: scale(1.04);
+            }
+        }
+
+        /* overlay on image */
+        #hero-{{ section.id }} .hero__media::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-color: var(--overlay-color, rgba(0,0,0,0.35));
+            opacity: var(--overlay-opacity, 0.35);
+            pointer-events: none;
+            transition: opacity .25s ease;
+        }
+
+        /* Content */
+        #hero-{{ section.id }} .hero__content {
+            flex: 1 1 50%;
+            max-width: var(--content-max-width);
+            z-index: 2;
+            color: var(--title-color);
+            text-align: left;
+        }
+
+        /* text alignment options */
+        #hero-{{ section.id }}.hero--align-center .hero__content { text-align: center; }
+        #hero-{{ section.id }}.hero--align-right .hero__content { text-align: right; }
+
+        .hero__badge {
+            display: inline-block;
+            background: var(--badge-bg);
+            color: var(--badge-color);
+            font-size: 13px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            margin-bottom: 12px;
+        }
+
+        .hero__preheading {
+            margin: 0 0 8px;
+            font-weight: 600;
+            color: rgba(0,0,0,0.6);
+            font-size: 14px;
+        }
+
+        .hero__title {
+            margin: 0 0 16px;
+            font-size: {% if section.settings.title_size == 'large' %}48px{% elsif section.settings.title_size == 'small' %}28px{% else %}36px{% endif %};
+            line-height: 1.05;
+            color: var(--title-color);
+            letter-spacing: -0.02em;
+        }
+
+        .hero__subtitle {
+            margin: 0 0 20px;
+            color: var(--subtitle-color);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .hero__buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .button {
+            display: inline-block;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform .12s ease, box-shadow .12s ease;
+        }
+
+        .button--primary {
+            background: {{ section.settings.button_bg }};
+            color: {{ section.settings.button_color }};
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        }
+
+        .button--primary:hover { transform: translateY(-2px); }
+
+        .button--ghost {
+            background: transparent;
+            border: 1px solid rgba(0,0,0,0.08);
+            color: {{ section.settings.button_secondary_color }};
+        }
+
+        /* Responsive */
+        @media (max-width: 980px) {
+            #hero-{{ section.id }} .hero__inner {
+                flex-direction: column;
+                padding: 28px;
+                min-height: auto;
+            }
+            #hero-{{ section.id }} .hero__media,
+            #hero-{{ section.id }} .hero__content {
+                width: 100%;
+                order: initial !important;
+            }
+            #hero-{{ section.id }} .hero__media {
+                min-height: 260px;
+            }
+            #hero-{{ section.id }} .hero__title {
+                font-size: 32px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #hero-{{ section.id }} .hero__title { font-size: 26px; }
+            #hero-{{ section.id }} .hero__subtitle { font-size: 15px; }
+            #hero-{{ section.id }} .hero__inner { padding: 18px; gap: 18px; }
+        }
+    </style>
+</section>
+
+{% schema %}
+{
+    "name": "Hero",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "hero_image",
+            "label": "Hero image"
+        },
+        {
+            "type": "text",
+            "id": "image_alt",
+            "label": "Image alt text",
+            "default": "Hero image"
+        },
+        {
+            "type": "select",
+            "id": "image_position",
+            "label": "Image position",
+            "default": "left",
+            "options": [
+                { "value": "left", "label": "Left" },
+                { "value": "right", "label": "Right" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "text_alignment",
+            "label": "Text alignment",
+            "default": "left",
+            "options": [
+                { "value": "left", "label": "Left" },
+                { "value": "center", "label": "Center" },
+                { "value": "right", "label": "Right" }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "badge_text",
+            "label": "Badge text",
+            "default": "badge_text"
+        },
+        {
+            "type": "text",
+            "id": "pre_heading",
+            "label": "Small pre-heading",
+            "default": "pre_heading"
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Your headline goes here"
+        },
+        {
+            "type": "select",
+            "id": "title_size",
+            "label": "Heading size",
+            "default": "medium",
+            "options": [
+                { "value": "small", "label": "Small" },
+                { "value": "medium", "label": "Medium" },
+                { "value": "large", "label": "Large" }
+            ]
+        },
+        {
+            "type": "textarea",
+            "id": "subheading",
+            "label": "Subheading",
+            "default": "Describe your product or promotion with a short sentence that converts."
+        },
+        {
+            "type": "text",
+            "id": "cta_text",
+            "label": "Primary button text",
+            "default": "Shop now"
+        },
+        {
+            "type": "url",
+            "id": "cta_link",
+            "label": "Primary button link"
+        },
+        {
+            "type": "text",
+            "id": "secondary_cta_text",
+            "label": "Secondary button text",
+            "default": "Learn more"
+        },
+        {
+            "type": "url",
+            "id": "secondary_cta_link",
+            "label": "Secondary button link",
+        },
+        {
+            "type": "color",
+            "id": "overlay_color",
+            "label": "Image overlay color",
+            "default": "#000000"
+        },
+        {
+            "type": "range",
+            "id": "overlay_opacity",
+            "label": "Overlay opacity",
+            "min": 0,
+            "max": 1,
+            "step": 0.1,
+            "default": 0.3
+        },
+        {
+            "type": "range",
+            "id": "height",
+            "label": "Minimum hero height (px)",
+            "min": 300,
+            "max": 1000,
+            "step": 10,
+            "unit": "px",
+            "default": 480
+        },
+        {
+            "type": "color",
+            "id": "title_color",
+            "label": "Title color",
+            "default": "#111827"
+        },
+        {
+            "type": "color",
+            "id": "subtitle_color",
+            "label": "Subtitle color",
+            "default": "#374151"
+        },
+        {
+            "type": "color",
+            "id": "badge_bg",
+            "label": "Badge background",
+            "default": "#F3F4F6"
+        },
+        {
+            "type": "color",
+            "id": "badge_color",
+            "label": "Badge text color",
+            "default": "#111827"
+        },
+        {
+            "type": "color",
+            "id": "button_bg",
+            "label": "Primary button background",
+            "default": "#111827"
+        },
+        {
+            "type": "color",
+            "id": "button_color",
+            "label": "Primary button text color",
+            "default": "#ffffff"
+        },
+        {
+            "type": "color",
+            "id": "button_secondary_color",
+            "label": "Secondary button text color",
+            "default": "#111827"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Hero",
+            "category": "General"
+        }
+    ]
+}
+{% endschema %}
