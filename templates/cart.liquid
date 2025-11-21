@@ -1,0 +1,108 @@
+{%- comment -%}
+    templates/cart.liquid
+    Simple, responsive cart template using the `cart` object.
+{%- endcomment -%}
+
+<style>
+    .cart-wrap{max-width:960px;margin:30px auto;padding:20px;font-family:system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;color:#111}
+    .cart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+    .cart-title{font-size:1.6rem;font-weight:700}
+    .cart-empty{text-align:center;padding:40px;border:1px dashed #ddd;border-radius:8px}
+    .cart-table{width:100%;border-collapse:collapse}
+    .cart-row{display:flex;align-items:center;padding:12px 0;border-bottom:1px solid #eee}
+    .cart-col-image{width:84px;flex:0 0 84px;margin-right:16px}
+    .cart-col-title{flex:1}
+    .cart-col-quantity{width:120px;text-align:center}
+    .cart-col-price{width:120px;text-align:right}
+    .cart-item-title{font-weight:600;margin-bottom:6px}
+    .cart-item-variant{color:#666;font-size:.95rem}
+    .cart-controls{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:14px}
+    .btn{background:#111;color:#fff;padding:10px 14px;border-radius:6px;border:0;cursor:pointer}
+    .btn.secondary{background:#f4f4f4;color:#111}
+    .btn.link{background:transparent;color:#111;text-decoration:underline;padding:0}
+    .checkout-area{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:14px;border-top:1px solid #eee}
+    .cart-summary{font-size:1.05rem}
+    input.qty{width:56px;padding:6px;border:1px solid #ddd;border-radius:4px;text-align:center}
+    img.cart-thumb{width:84px;height:84px;object-fit:cover;border-radius:6px}
+    @media (max-width:640px){
+        .cart-row{flex-direction:column;align-items:flex-start}
+        .cart-col-quantity,.cart-col-price{width:100%;text-align:left;margin-top:10px}
+        .checkout-area{flex-direction:column;align-items:stretch;gap:10px}
+    }
+</style>
+
+<div class="cart-wrap">
+    <div class="cart-header">
+        <h1 class="cart-title">Your cart</h1>
+        <div>{{ cart.item_count }} item{% if cart.item_count != 1 %}s{% endif %}</div>
+    </div>
+
+    {% if cart.item_count == 0 %}
+        <div class="cart-empty">
+            <p>Your cart is currently empty.</p>
+            <a class="btn" href="/">Continue shopping</a>
+        </div>
+    {% else %}
+        <form action="/cart" method="post" id="cart-form">
+            <div>
+                {% for item in cart.items %}
+                    <div class="cart-row" aria-labelledby="item-{{ forloop.index }}">
+                        <div class="cart-col-image">
+                            <a href="{{ item.url }}">
+                                {% if item.image %}
+                                    <img class="cart-thumb" src="{{ item.image | img_url: '200x' }}" alt="{{ item.title }}">
+                                {% else %}
+                                    <div style="width:84px;height:84px;background:#f6f6f6;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#bbb">No image</div>
+                                {% endif %}
+                            </a>
+                        </div>
+
+                        <div class="cart-col-title">
+                            <div id="item-{{ forloop.index }}" class="cart-item-title">
+                                <a href="{{ item.url }}" style="color:inherit;text-decoration:none">{{ item.product.title | default: item.title }}</a>
+                            </div>
+                            {% if item.variant_title and item.variant_title != 'Default Title' %}
+                                <div class="cart-item-variant">{{ item.variant_title }}</div>
+                            {% endif %}
+                            {% if item.properties and item.properties != blank %}
+                                <div style="margin-top:6px;color:#666;font-size:.95rem">
+                                    {% for p in item.properties %}
+                                        {% unless p.last == blank %}
+                                            <div>{{ p.first }}: {{ p.last }}</div>
+                                        {% endunless %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="cart-col-quantity">
+                            <label for="updates_{{ forloop.index }}" style="display:none">Quantity</label>
+                            <input class="qty" id="updates_{{ forloop.index }}" type="number" name="updates[{{ item.key }}]" min="0" value="{{ item.quantity }}" disabled>
+                            <div style="margin-top:6px;">
+                                <a class="btn link" href="/cart/change?line={{ forloop.index }}&amp;quantity=0" style="margin-left:6px">Remove</a>
+                            </div>
+                        </div>
+
+                        <div class="cart-col-price">
+                            <div style="font-weight:600">{{ item.line_price | money }}</div>
+                            <div style="color:#666;font-size:.95rem">({{ item.price | money }} each)</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="checkout-area">
+                <div class="cart-controls">
+                    <a class="btn" href="/checkout">Proceed to checkout</a>
+                </div>
+
+                <div class="cart-summary">
+                    <div>Subtotal: <strong>{{ cart.total_price | money }}</strong></div>
+                    {% if cart.shipping_required %}
+                        <div style="color:#666;font-size:.95rem">Shipping and taxes calculated at checkout</div>
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+    {% endif %}
+</div>
