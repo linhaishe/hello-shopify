@@ -66,3 +66,20 @@ Guidelines on adding JavaScript for enhanced interactivity and dynamic features.
 
 ## Part 5: Conclusion
 Final thoughts and next steps for further development and customization of the theme.
+```
+hello-shopify
+├─ .shopify
+│  └─ metafields.json
+├─ README.md
+├─ config
+│  └─ settings_schema.json
+├─ package.json
+├─ sections
+│  └─ header.liquid
+├─ shopify.theme.toml
+└─ templates
+   ├─ cart.liquid
+   ├─ index.liquid
+   └─ product.liquid
+
+```
