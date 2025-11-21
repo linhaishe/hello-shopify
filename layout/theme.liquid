@@ -4,8 +4,8 @@
     {{ content_for_header }}
   </head>
   <body>
-
-    {% section 'header' %}
+    {% comment %} {% section 'header' %} {% endcomment %}
+    {% sections 'header-group' %}
     {{ content_for_layout }}
 
   </body>

@@ -1,0 +1,63 @@
+<div id="announcement-bar-{{ section.id }}" class="announcement-bar" role="region" aria-label="Announcement">
+	{% if section.settings.text != blank %}
+		<div class="announcement-bar__inner" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+			<div class="announcement-bar__text">
+				{{ section.settings.text }}
+			</div>
+		</div>
+	{% endif %}
+</div>
+
+<style>
+	.announcement-bar__inner {
+		padding: 10px 16px;
+		text-align: center;
+		font-size: 14px;
+		line-height: 1.3;
+	}
+
+	.announcement-bar__text {
+		display: inline-block;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-width: 100%;
+	}
+
+	/* Responsive smaller text on very small screens */
+	@media (max-width: 420px) {
+		.announcement-bar__inner { font-size: 13px; padding: 8px 12px; }
+	}
+</style>
+
+{% schema %}
+{
+	"name": "Announcement bar",
+	"settings": [
+		{
+			"type": "text",
+			"id": "text",
+			"label": "Announcement text",
+			"default": "Free shipping on orders over $50!"
+		},
+		{
+			"type": "color",
+			"id": "bg_color",
+			"label": "Background color",
+			"default": "#111827"
+		},
+		{
+			"type": "color",
+			"id": "text_color",
+			"label": "Text color",
+			"default": "#ffffff"
+		}
+	],
+	"presets": [
+		{
+			"name": "Announcement bar",
+			"category": "Announcement"
+		}
+	]
+}
+{% endschema %}
