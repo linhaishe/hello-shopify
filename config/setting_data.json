@@ -1,4 +1,7 @@
 {
-    // for the settings_data.json structure,online editor use only
-    "current": {},
+  // for the settings_data.json structure,online editor use only
+  "current": {
+    "heading_font": "bricolage_grotesque_n4",
+    "content_for_index": []
+  }
 }

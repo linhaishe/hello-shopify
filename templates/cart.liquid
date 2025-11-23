@@ -33,8 +33,12 @@
 
 <div class="cart-wrap">
     <div class="cart-header">
-        <h1 class="cart-title">Your cart</h1>
+        <h1 class="cart-title">{{  'cart.title' | t }}</h1>
         <div>{{ cart.item_count }} item{% if cart.item_count != 1 %}s{% endif %}</div>
+        {% comment %} <pre>{{ request.locale | json }}</pre> {% endcomment %}
+        {% comment %} <p>当前语言：{{ request.locale.iso_code }}</p> {% endcomment %}
+
+
     </div>
 
     {% if cart.item_count == 0 %}

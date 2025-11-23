@@ -2,6 +2,8 @@
 <html lang="en">
   <head>
     {{ content_for_header }}
+    <link rel="stylesheet" href="{{ 'theme.css' | asset_url  }}" media="print" onload="this.media='all'">
+    {% comment %} {{ 'theme.css' | asset_url | stylesheet_tag }} {% endcomment %}
   </head>
   <body>
     {% comment %} {% section 'header' %} {% endcomment %}
