@@ -2,7 +2,12 @@
   "sections": {
     "hero-section": {
       "type": "hero"
+    },
+    "main_collection_tcDefW2": {
+      "type": "main-collection",
+      "name": "Main collection",
+      "settings": {}
     }
   },
-  "order": ["hero-section"]
+  "order": ["hero-section", "main_collection_tcDefW2"]
 }
