@@ -1,0 +1,202 @@
+<section id="footer-section" class="site-footer">
+    {% stylesheet %}
+        .site-footer {
+            background: #0f1722;
+            color: #e6eef8;
+            padding: 48px 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        }
+
+        .site-footer__inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            align-items: start;
+        }
+
+        /* Columns */
+        .site-footer__col {
+            flex: 1 1 260px;
+            min-width: 220px;
+        }
+
+        /* Menu (left) */
+        .footer-menu__title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #ffffff;
+            letter-spacing: 0.2px;
+        }
+
+        .footer-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-menu__item {
+            margin-bottom: 8px;
+        }
+
+        .footer-menu__link {
+            color: #cfe5ff;
+            text-decoration: none;
+            transition: color .15s ease;
+        }
+
+        .footer-menu__link:hover,
+        .footer-menu__link:focus {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        /* Newsletter (right) */
+        .newsletter {
+            background: rgba(255,255,255,0.02);
+            padding: 18px;
+            border-radius: 8px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+        }
+
+        .newsletter__title {
+            margin: 0 0 6px 0;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .newsletter__description {
+            margin: 0 0 12px 0;
+            font-size: 14px;
+            color: #c7daee;
+        }
+
+        .newsletter__form {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .newsletter__input {
+            flex: 1 1 auto;
+            padding: 10px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: transparent;
+            color: #eaf6ff;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .newsletter__input::placeholder { color: rgba(235,248,255,0.5); }
+
+        .newsletter__button {
+            background: #3b82f6;
+            color: #fff;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .newsletter__button:hover,
+        .newsletter__button:focus { background: #2563eb; }
+
+        /* Bottom note */
+        .site-footer__note {
+            text-align: center;
+            margin-top: 22px;
+            font-size: 13px;
+            color: #99b7da;
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 680px) {
+            .site-footer__inner { gap: 18px; }
+            .newsletter__form { flex-direction: column; align-items: stretch; }
+            .newsletter__button { width: 100%; }
+        }
+    {% endstylesheet %}
+
+    <div class="site-footer__inner">
+        <!-- Left: Menu -->
+        <div class="site-footer__col">
+            <h3 class="footer-menu__title">Menu</h3>
+
+            {% comment %}
+                Looks for a navigation with handle "footer".
+                If not present, show a helpful fallback message.
+            {% endcomment %}
+
+            {% assign footer_menu = linklists.footer %}
+            {% if footer_menu and footer_menu.links.size > 0 %}
+                <ul class="footer-menu" role="list">
+                    {% for link in footer_menu.links %}
+                        {% if link.url contains '/collections' or link.type == 'collection' or link.object_type == 'collection' %}
+                            <li cla ss="footer-menu__item">
+                                <a href="{{ link.url }}" class="footer-menu__link">{{ link.title }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p style="color:#bcd7f7; margin:0 0 8px 0; font-size:14px;">
+                    No "footer" menu found. Create a link list with the handle <strong>footer</strong> in Online Store → Navigation to populate this area.
+                </p>
+            {% endif %}
+        </div>
+
+        <!-- Right: Newsletter -->
+        <div class="site-footer__col">
+            <div class="newsletter" aria-labelledby="newsletter-title">
+                <h3 id="newsletter-title" class="newsletter__title">Join our newsletter</h3>
+                <p class="newsletter__description">Get product news, early access and exclusive offers.</p>
+
+                {% comment %} <form method="post" action="/contact#contact_form" accept-charset="UTF-8" class="newsletter__form" id="newsletter_form"> {% endcomment %}
+                 {% form 'contact'  %}
+                    <input type="hidden" name="form_type" value="contact">
+                    <input type="hidden" name="utf8" value="✓">
+
+                    <label for="newsletter_email" class="visually-hidden">Email</label>
+                    <input
+                        id="newsletter_email"
+                        class="newsletter__input"
+                        type="email"
+                        name="contact[email]"
+                        placeholder="Email address"
+                        aria-label="Email address"
+                        required
+                        autocapitalize="off"
+                        autocorrect="off"
+                    >
+
+                    <button type="submit" class="newsletter__button">Subscribe</button>
+                    {% endform %}
+                {% comment %} </form> {% endcomment %}
+
+                <p style="font-size:12px; color:#9fc3f3; margin-top:10px;">We respect your privacy. Unsubscribe anytime.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="site-footer__note">
+        &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.
+    </div>
+
+    {% schema %}
+    {
+        "name": "Footer",
+        "tag": "section",
+        "settings": [],
+        "presets": [
+            {
+                "name": "Footer",
+                "category": "Footer"
+            }
+        ]
+    }
+    {% endschema %}
+</section>
