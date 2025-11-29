@@ -2,6 +2,8 @@
 
  shopify admin link: https://admin.shopify.com/
 
+ learning material: https://www.youtube.com/watch?v=okSKWf8PBNY
+
 # part 1 Setup / Laying the foundation
 
 1. install cli
